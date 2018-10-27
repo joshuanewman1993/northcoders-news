@@ -8,6 +8,15 @@ const fetchAllTopics = (req, res, next) => {
     })
     .catch(next);
 };
+const fetchOneSlug = (req, res, next) => {
+  const slug = req.params.slug;
+  Article.findOne({ belongs_to: slug })
+    // .populate("created_by")
+    .then(topic => {
+      res.status(200).send({ topic });
+    })
+    .catch(next);
+};
 const fetchAllArticlesBySlugId = (req, res, next) => {
   const slug = req.params.slug;
   Article.find({ belongs_to: slug })
@@ -32,6 +41,7 @@ const postArticleBySlugId = (req, res, next) => {
 
 module.exports = {
   fetchAllTopics,
+  fetchOneSlug,
   fetchAllArticlesBySlugId,
   postArticleBySlugId
 };
