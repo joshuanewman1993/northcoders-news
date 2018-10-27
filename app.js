@@ -16,12 +16,12 @@ mongoose
   .then(() => console.log(`Connected to database ${DB_URL}`))
   .catch(console.log());
 
-app.get("/", HomePage);
+// app.get("/", HomePage);
 
 // this is used to render the html page from your view folder
-// app.get('/', (req, res, next) => {
-//   res.sendFile(`$(__dirname/views/api.html)`)
-// });
+app.get("/", (req, res, next) => {
+  res.sendFile(`${__dirname}/views/api.html`);
+});
 app.use("/api", apiRouter);
 
 app.use("/*", (req, res, next) => {
