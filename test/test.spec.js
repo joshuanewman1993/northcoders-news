@@ -19,7 +19,17 @@ describe("/api", () => {
   after(() => {
     return mongoose.disconnect();
   });
-
+  // No longer used since it has switched to the views
+  // describe("/", () => {
+  //   it("Get returns a status of 200 and displays a message", () => {
+  //     return req
+  //       .get("/")
+  //       .expect(200)
+  //       .then(res => {
+  //         expect(res.body).to.have.all.keys("message");
+  //       });
+  //   });
+  // });
   // Topics tests
   describe("/topics", () => {
     it("Get returns a status 200 and an array of topics", () => {
@@ -42,7 +52,15 @@ describe("/api", () => {
           expect(res.body.topics[0].belongs_to).to.equal("mitch");
         });
     });
-
+    it("Get returns a status of 200 and all articles by slug related to cats", () => {
+      return req
+        .get("/api/topics/cats/articles")
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.have.all.keys("topics");
+          expect(res.body.topics[1].belongs_to).to.equal("cats");
+        });
+    });
     it("Post returns a status of 201 and creates a new article by slug", () => {
       const article = {
         votes: 0,
@@ -107,6 +125,17 @@ describe("/api", () => {
         });
     });
   });
+  it("Get returns a status of 200 and displays all comments on an article", () => {
+    console.log(articleDocs[0]._id); // we use articleDocs and the array [0] element to access the array
+    // then get the id
+    return req
+      .get(`/api/articles/${articleDocs[0]._id}/comments`)
+      .expect(200)
+      .then(res => {
+        expect(res.body).to.have.all.keys("comments");
+        // expect()
+      });
+  });
   // comments testing
   describe("/comments", () => {
     it("Get returns a status of 200 and returns all comments ", () => {
@@ -132,6 +161,15 @@ describe("/api", () => {
           expect(res.body.users[1].avatar_url).to.equal(
             "https://carboncostume.com/wordpress/wp-content/uploads/2017/10/dale-chipanddalerescuerangers.jpg"
           );
+        });
+    });
+    it("Get returns a status of 200 and returns a single username", () => {
+      return req
+        .get("/api/users/butter_bridge")
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.have.all.keys("user");
+          expect(res.body.user.username).to.eql("butter_bridge");
         });
     });
   });
