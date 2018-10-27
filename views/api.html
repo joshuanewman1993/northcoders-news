@@ -3,10 +3,83 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <title>This is an api </title>
 </head>
 
 <body>
+    <header>
+        <h1>A current list of all the end points that can be used in this app</h1>
+    </header>
+    <div class="grid">
+
+        <div>
+            <h3>GET /api</h3>
+            # Serves an HTML page with documentation for all the available endpoints
+        </div>
+        <div>
+            <h3>Below is a list of end points releated to each topic </h3>
+            <p>Get /api/topics</p>
+            <p>returns all of topics</p>
+
+            <p>Get /api/topics/:slug</p>
+            <p>returns one individual topic</p>
+
+            <p>GET /api/topics/:topic_slug/articles</p>
+            <p># return all the articles for a certain topic
+                # e.g: `/api/topics/football/articles`</p>
+
+            <p>POST /api/topics/:topic_slug/articles</p>
+            <p># Add a new article to a topic. This route requires a JSON body with title and body key value pairs
+                <br># e.g: `{ "title": "new article", "body": "This is my new article content", "created_by": "user_id
+                goes
+                here"}`</p>
+            <p>GET /api/articles/:article_id/comments</p>
+            <p># Get all the comments for a individual article</p>
+        </div>
+        <div>
+            <h3>Below is a list of end points releated to each article</h3>
+            <p>GET /api/articles</p>
+            <p># Returns all the articles</p>
+
+            <p>GET /api/articles/:article_id</p>
+            <p># Get an individual article</p>
+
+            <p>POST /api/articles/:article_id/comments</p>
+            <p># Add a new comment to an article. This route requires a JSON body with body and created_by key value
+                pairs
+                <br># e.g: `{"body": "This is my new comment", "created_by": "user_id goes here"}`</p>
+        </div>
+        <div>
+            <h3>Below is a list of end points releated to each comment</h3>
+            <p>Get /api/comments</p>
+            <p>returns all the comments</p>
+
+            <p>Get /api/comments/::comment_id</p>
+            <p>returns one individual comment</p>
+
+            <p>DELETE /api/comments/:comment_id</p>
+            <p># Deletes a comment</p>
+        </div>
+        <div>
+            <h3>Below is a list of end points releated to each user</h3>
+            <p>Get /api/users</p>
+            <p>returns all the users</p>
+
+            <p>Get /api/users/:username</p>
+            <p>returns one individual user</p>
+        </div>
+        <div>item5</div>
+    </div>
+    <!--<div>
+        
+    </div>
+
+    <div>
+        <h2></h2>
+        <p></p>
+        <p></p>
+    </div>-->
 
 </body>
 
