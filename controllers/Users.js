@@ -10,7 +10,6 @@ const fetchAllUsers = (req, res, next) => {
 };
 
 const fetchOneUserByUserName = (req, res, next) => {
-  console.log(req.params.username);
   Users.findOne({ username: req.params.username })
     .then(user => {
       if (!user) {

@@ -13,23 +13,12 @@ describe("/api", () => {
   beforeEach(() => {
     return seedDB(topics, users, articles, comments).then(docs => {
       [topicDocs, userDocs, articleDocs, commentDocs] = docs;
-      // console.log(articleDocs);
     });
   });
   after(() => {
     return mongoose.disconnect();
   });
-  // No longer used since it has switched to the views
-  // describe("/", () => {
-  //   it("Get returns a status of 200 and displays a message", () => {
-  //     return req
-  //       .get("/")
-  //       .expect(200)
-  //       .then(res => {
-  //         expect(res.body).to.have.all.keys("message");
-  //       });
-  //   });
-  // });
+
   // Topics tests
   describe("/topics", () => {
     it("Get returns a status 200 and an array of topics", () => {
@@ -37,7 +26,6 @@ describe("/api", () => {
         .get("/api/topics")
         .expect(200)
         .then(res => {
-          // console.log(res.body);
           expect(res.body).to.have.all.keys("topics");
           expect(Array.isArray(res.body.topics)).to.be.true;
           expect(res.body.topics[0]).to.be.an("object");
@@ -77,17 +65,19 @@ describe("/api", () => {
           expect(res.body).to.have.all.keys("article");
         });
     });
-    it("Get returns a status of 200 and all articles by slug related to cats", () => {
+  });
+
+  // 404 testing block
+  describe("status 404", () => {
+    it.only("returns a status of 404 when passed an invalid article link", () => {
       return req
-        .get("/api/topics/cats/articles")
-        .expect(200)
+        .get("/api/articles")
+        .expect(404)
         .then(res => {
-          expect(res.body).to.have.all.keys("topics");
-          expect(res.body.topics[0].belongs_to).to.equal("cats");
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
         });
     });
-  });
-  describe("status 404", () => {
     it("returns a status of 404 when passed an invalid slug", () => {
       return req
         .get("/api/topics/bob/articles")
@@ -97,7 +87,35 @@ describe("/api", () => {
           expect(res.body).to.be.an("object");
         });
     });
+    it("returns a status of 404 when passed an invalid article id", () => {
+      return req
+        .get("/api/articles/5bd31e1bc113b7adf623e2b8")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an comment id", () => {
+      return req
+        .get("/api/comments/6bd5f6806f11fb430b789ff4")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an invalid username", () => {
+      return req
+        .get("/api/users/venom")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
   });
+
   // articles testing block
   describe("/articles", () => {
     it("Get returns a status of 200 and an array of articles", () => {
@@ -105,7 +123,7 @@ describe("/api", () => {
         .get("/api/articles")
         .expect(200)
         .then(res => {
-          expect(res.body).to.have.all.keys("article");
+          expect(res.body).to.have.all.keys("articles");
           expect(res.body).to.be.an("object");
           expect(res.body.article[0].title).to.equal(
             "Living in the shadow of a great man"
@@ -126,14 +144,14 @@ describe("/api", () => {
     });
   });
   it("Get returns a status of 200 and displays all comments on an article", () => {
-    console.log(articleDocs[0]._id); // we use articleDocs and the array [0] element to access the array
+    // console.log(articleDocs[0]._id); // we use articleDocs and the array [0] element to access the array
     // then get the id
     return req
       .get(`/api/articles/${articleDocs[0]._id}/comments`)
       .expect(200)
       .then(res => {
         expect(res.body).to.have.all.keys("comments");
-        // expect()
+        expect(res.body.comments).to.be.an("array");
       });
   });
   // comments testing
@@ -145,6 +163,11 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.have.all.keys("comments");
           expect(res.body).to.be.an("object");
+          console.log(res.body.comments[0].created_by.username);
+          expect(res.body.comments[0].created_by.username).to.eql(
+            "dedekind561"
+          );
+          expect(res.body.comments[0].created_by.name).to.eql("mitch");
         });
     });
   });
@@ -170,6 +193,7 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.have.all.keys("user");
           expect(res.body.user.username).to.eql("butter_bridge");
+          expect(res.body).to.be.an("object");
         });
     });
   });

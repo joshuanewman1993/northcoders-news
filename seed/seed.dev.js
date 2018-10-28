@@ -13,7 +13,6 @@ const data = require("./testData");
 mongoose
   .connect(DB_URL)
   .then(() => {
-    // console.log(data.comments);
     return seedDB(data.topics, data.users, data.articles, data.comments);
   })
   .then(() => mongoose.disconnect())

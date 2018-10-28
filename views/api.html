@@ -3,16 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheet.css">
     <title>This is an api </title>
 </head>
 
 <body>
     <header>
-        <h1>A current list of all the end points that can be used in this app</h1>
+        <h1>NorthCoders News</h1>
     </header>
     <div class="grid">
-
+        <h1>list of all the end points that can be used in this app</h1>
         <div>
             <h3>GET /api</h3>
             # Serves an HTML page with documentation for all the available endpoints
@@ -55,12 +55,16 @@
             <p>Get /api/comments</p>
             <p>returns all the comments</p>
 
-            <p>Get /api/comments/::comment_id</p>
-            <p>returns one individual comment</p>
+            <p>Get /api/comments/:comment_id</p>
+            <p>#returns one individual comment</p>
+
+            <p>Post /api/comments/:comment_id</p>
+            <p>#create's a new comment</p>
 
             <p>DELETE /api/comments/:comment_id</p>
             <p># Deletes a comment</p>
         </div>
+
         <div>
             <h3>Below is a list of end points releated to each user</h3>
             <p>Get /api/users</p>
@@ -68,18 +72,15 @@
 
             <p>Get /api/users/:username</p>
             <p>returns one individual user</p>
+
+            <p>Post /api/users/:username</p>
+            <p>#create a new user</p>
+
+            <p>Delete /api/users/:username</p>
+            <p>#delete a user</p>
         </div>
         <div>item5</div>
     </div>
-    <!--<div>
-        
-    </div>
-
-    <div>
-        <h2></h2>
-        <p></p>
-        <p></p>
-    </div>-->
 
 </body>
 

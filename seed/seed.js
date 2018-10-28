@@ -29,7 +29,7 @@ const seedDB = (topicsData, userData, articleData, commentData) => {
         userDocs,
         articleDocs
       );
-      // console.log(formattedComments);
+
       return Promise.all([
         topicDocs,
         userDocs,

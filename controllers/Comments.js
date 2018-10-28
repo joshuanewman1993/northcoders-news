@@ -9,7 +9,6 @@ const fetchAllComments = (req, res, next) => {
     .catch(next);
 };
 const fetchOneCommentById = (req, res, next) => {
-  // console.log(req.params.comment_id);
   Comment.findById(req.params.comment_id)
     .populate("created_by")
     .then(comment => {

@@ -10,7 +10,7 @@ const apiRouter = require("./routes/api-route");
 app.use(bodyParser.json());
 //  { useNewUrlParser: true } this is no longer needed
 //due to an update recently to mongoDB
-console.log(DB_URL);
+
 mongoose
   .connect(DB_URL)
   .then(() => console.log(`Connected to database ${DB_URL}`))
@@ -22,6 +22,7 @@ mongoose
 app.get("/", (req, res, next) => {
   res.sendFile(`${__dirname}/views/api.html`);
 });
+
 app.use("/api", apiRouter);
 
 app.use("/*", (req, res, next) => {

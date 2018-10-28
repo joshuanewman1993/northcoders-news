@@ -4,8 +4,8 @@ const Comment = require("../models/Comment");
 const fetchAllArticles = (req, res, next) => {
   Article.find()
     .populate("created_by")
-    .then(article => {
-      res.status(200).send({ article });
+    .then(articles => {
+      res.status(200).send({ articles });
     })
     .catch(next);
 };
@@ -22,10 +22,12 @@ const fetchArticleById = (req, res, next) => {
 };
 
 const fetchAllArticleCommentsbyId = (req, res, next) => {
-  // Comment???
   Comment.find({ belongs_to: req.params.id })
     .populate("created_by")
     .then(comments => {
+      if (!comments) {
+        return Promise.reject({ status: 404, msg: "comments not found" });
+      }
       res.status(200).send({ comments });
     })
     .catch(next);

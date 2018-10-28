@@ -1,6 +1,4 @@
 const formatArticle = (articleData, userDocs) => {
-  // console.log(articleData);
-  // console.log(userDocs);
   // I need to bring in the user docs so that i have access to the user name so that it
   // can be used below
   return articleData.map(article => ({
