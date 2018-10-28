@@ -69,9 +69,36 @@ describe("/api", () => {
 
   // 404 testing block
   describe("status 404", () => {
-    it.only("returns a status of 404 when passed an invalid article link", () => {
+    it("returns a status of 404 when passed an invalid /article link", () => {
       return req
-        .get("/api/articles")
+        .get("/api/article")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an invalid /comment link", () => {
+      return req
+        .get("/api/comment")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an invalid /user link", () => {
+      return req
+        .get("/api/user")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an invalid /topic link", () => {
+      return req
+        .get("/api/user")
         .expect(404)
         .then(res => {
           expect(res.body).to.eql({ msg: "page not found" });
@@ -125,10 +152,10 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.have.all.keys("articles");
           expect(res.body).to.be.an("object");
-          expect(res.body.article[0].title).to.equal(
+          expect(res.body.articles[0].title).to.equal(
             "Living in the shadow of a great man"
           );
-          expect(res.body.article[0].created_by.name).to.equal("jonny");
+          expect(res.body.articles[0].created_by.name).to.equal("jonny");
         });
     });
     it("Get returns a status of 200 and a single article", () => {
