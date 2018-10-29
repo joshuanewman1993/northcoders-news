@@ -23,6 +23,9 @@ const fetchOneUserByUserName = (req, res, next) => {
 const createOneUser = (req, res, next) => {
   Users.create({ ...req.body, username: req.params.username })
     .then(user => {
+      if (!user) {
+        Promise.reject({ status: 400, msg: "bad request" });
+      }
       res.status(201).send({ user });
     })
     .catch(next);
@@ -31,7 +34,10 @@ const createOneUser = (req, res, next) => {
 const deleteOneUserByUserName = (req, res, next) => {
   Users.findOneAndRemove(req.params.username)
     .then(deleted => {
-      res.status(301).send({ deleted });
+      if (!deleted) {
+        return Promise.reject({ status: 400, msg: "bad request" });
+      }
+      res.status(204).send({ deleted });
     })
     .catch(next);
 };

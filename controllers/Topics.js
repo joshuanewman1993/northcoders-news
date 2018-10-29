@@ -13,6 +13,9 @@ const fetchOneSlug = (req, res, next) => {
   Article.findOne({ belongs_to: slug })
     // .populate("created_by")
     .then(topic => {
+      if (!topic) {
+        return Promise.reject({ status: 404, msg: "article not found" });
+      }
       res.status(200).send({ topic });
     })
     .catch(next);
@@ -34,6 +37,9 @@ const postArticleBySlugId = (req, res, next) => {
   const slug = req.params.slug;
   Article.create({ ...req.body, belongs_to: slug })
     .then(article => {
+      if (!article) {
+        Promise.reject({ status: 400, msg: "bad request" });
+      }
       res.status(201).send({ article });
     })
     .catch(next);
