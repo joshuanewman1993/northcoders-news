@@ -5,7 +5,7 @@ const {
   fetchOneCommentById,
   postOneCommentById,
   deleteOneComment
-} = require("../controllers/Comments");
+} = require("../controllers/comments");
 
 commentsRoute.get("/", fetchAllComments);
 commentsRoute.get("/:comment_id", fetchOneCommentById);

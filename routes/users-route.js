@@ -4,7 +4,7 @@ const {
   fetchOneUserByUserName,
   createOneUser,
   deleteOneUserByUserName
-} = require("../controllers/Users");
+} = require("../controllers/users");
 
 usersRoute.get("/", fetchAllUsers);
 usersRoute.get("/:username", fetchOneUserByUserName);

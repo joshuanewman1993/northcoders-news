@@ -4,7 +4,7 @@ const {
   fetchArticleById,
   postCommentsByArticleId,
   fetchAllArticleCommentsbyId
-} = require("../controllers/Articles");
+} = require("../controllers/articles");
 
 articlesRoute.get("/", fetchAllArticles);
 articlesRoute.get("/:id", fetchArticleById);
