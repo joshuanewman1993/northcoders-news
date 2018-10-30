@@ -21,7 +21,7 @@ describe("/api", () => {
 
   // Topics tests
   describe("/topics", () => {
-    it("Get returns a status 200 and an array of topics", () => {
+    it.only("Get returns a status 200 and an array of topics", () => {
       return req
         .get("/api/topics")
         .expect(200)
@@ -29,7 +29,22 @@ describe("/api", () => {
           expect(res.body).to.have.all.keys("topics");
           expect(Array.isArray(res.body.topics)).to.be.true;
           expect(res.body.topics[0]).to.be.an("object");
+          expect(res.body).to.not.be.a("string");
+          expect(res.body).to.not.be.an("array");
           expect(res.body.topics.length).to.equal(2);
+          expect(res.body.topics.length).to.not.equal(123);
+          expect(res.body.topics[0]).to.have.keys(
+            "_id",
+            "title",
+            "slug",
+            "__v"
+          );
+          expect(res.body.topics[0]).to.not.have.keys(
+            "id",
+            "list",
+            "snail",
+            "v__v"
+          );
         });
     });
 
