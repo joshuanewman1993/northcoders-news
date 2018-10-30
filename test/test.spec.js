@@ -124,13 +124,15 @@ describe("/api", () => {
           expect(res.body).to.be.an("object");
         });
     });
-    it("returns a status of 404 when passed an invalid slug", () => {
+    it.only("returns a status of 404 when passed an invalid slug", () => {
       return req
         .get("/api/topics/bob/articles")
         .expect(404)
         .then(res => {
           expect(res.body).to.eql({ msg: "page not found" });
           expect(res.body).to.be.an("object");
+          expect(res.body).to.not.be.an("array");
+          expect(res.body).to.not.equal("msg: You made a bad request");
         });
     });
     it("returns a status of 404 when passed an invalid article id", () => {
@@ -149,6 +151,26 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.eql({ msg: "page not found" });
           expect(res.body).to.be.an("object");
+          expect(res.body).to.not.equal("cats");
+          expect(res.body).to.not.equal({
+            comment: {
+              votes: 7,
+              created_at: "2017-07-26T06:42:10.835Z",
+              _id: "5bd8b855c43542cb5df9c08b",
+              body:
+                "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — on you it works.",
+              belongs_to: "5bd8b855c43542cb5df9c087",
+              created_by: {
+                _id: "5bd8b855c43542cb5df9c086",
+                username: "dedekind561",
+                name: "mitch",
+                avatar_url:
+                  "https://carboncostume.com/wordpress/wp-content/uploads/2017/10/dale-chipanddalerescuerangers.jpg",
+                __v: 0
+              },
+              __v: 0
+            }
+          });
         });
     });
     it("returns a status of 404 when passed an invalid username", () => {
@@ -165,7 +187,7 @@ describe("/api", () => {
   });
 
   // articles testing block
-  describe.only("/articles", () => {
+  describe("/articles", () => {
     it("Get returns a status of 200 and an array of articles", () => {
       return req
         .get("/api/articles")
@@ -214,6 +236,7 @@ describe("/api", () => {
           expect(res.body).to.have.all.keys("article");
           expect(res.body).to.be.an("object");
           expect(res.body.article._id).to.equal(`${articleDocs[0]._id}`);
+          expect(res.body.article._id).to.not.equal("Jolly Roger");
         });
     });
   });
