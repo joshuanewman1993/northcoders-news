@@ -158,6 +158,8 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.eql({ msg: "page not found" });
           expect(res.body).to.be.an("object");
+          expect(res.body).to.not.equal({ msg: "You made a bad request" });
+          expect(res.body).to.not.be.an("array");
         });
     });
   });
