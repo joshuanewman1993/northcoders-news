@@ -7,8 +7,8 @@ const {
   deleteOneComment
 } = require("../controllers/comments");
 
-commentsRoute.get("/", fetchAllComments);
-commentsRoute.get("/:comment_id", fetchOneCommentById);
-commentsRoute.post("/:comment_id", postOneCommentById);
-commentsRoute.delete("/:comment_id", deleteOneComment);
+commentsRoute.route("/").get(fetchAllComments);
+commentsRoute.route("/:comment_id").get(fetchOneCommentById);
+commentsRoute.route("/:comment_id").post(postOneCommentById);
+commentsRoute.route("/:comment_id").delete(deleteOneComment);
 module.exports = commentsRoute;

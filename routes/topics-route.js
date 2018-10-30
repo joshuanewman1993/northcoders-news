@@ -8,9 +8,9 @@ const {
 
 topicsRoute.get("/", fetchAllTopics);
 // fetch one topic by slug??!?
-topicsRoute.get("/:slug", fetchOneSlug);
-topicsRoute.get("/:slug/articles", fetchAllArticlesBySlugId);
-topicsRoute.post("/:slug/articles", postArticleBySlugId);
+topicsRoute.route("/:slug").get(fetchOneSlug);
+topicsRoute.route("/:slug/articles").get(fetchAllArticlesBySlugId);
+topicsRoute.route("/:slug/articles").post(postArticleBySlugId);
 
 // belongs_to is the slug
 //on the req.params

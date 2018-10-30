@@ -6,10 +6,10 @@ const {
   fetchAllArticleCommentsbyId
 } = require("../controllers/articles");
 
-articlesRoute.get("/", fetchAllArticles);
-articlesRoute.get("/:id", fetchArticleById);
-articlesRoute.get("/:id/comments", fetchAllArticleCommentsbyId);
+articlesRoute.route("/").get(fetchAllArticles);
+articlesRoute.route("/:id").get(fetchArticleById);
+articlesRoute.route("/:id/comments").get(fetchAllArticleCommentsbyId);
 
-articlesRoute.post("/:id/comments", postCommentsByArticleId);
+articlesRoute.route("/:id/comments").post(postCommentsByArticleId);
 
 module.exports = articlesRoute;
