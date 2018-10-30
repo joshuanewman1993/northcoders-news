@@ -21,7 +21,7 @@ describe("/api", () => {
 
   // Topics tests
   describe("/topics", () => {
-    it.only("Get returns a status 200 and an array of topics", () => {
+    it("Get returns a status 200 and an array of topics", () => {
       return req
         .get("/api/topics")
         .expect(200)
@@ -163,7 +163,7 @@ describe("/api", () => {
   });
 
   // articles testing block
-  describe("/articles", () => {
+  describe.only("/articles", () => {
     it("Get returns a status of 200 and an array of articles", () => {
       return req
         .get("/api/articles")
@@ -176,6 +176,31 @@ describe("/api", () => {
           );
           expect(res.body.articles.length).to.equal(4);
           expect(res.body.articles[0].comment_count).to.equal(2);
+          expect(res.body.articles[0]).to.have.all.keys(
+            "_id",
+            "votes",
+            "title",
+            "created_by",
+            "body",
+            "created_at",
+            "belongs_to",
+            "__v",
+            "comment_count"
+          );
+          expect(res.body.articles[0]).to.not.have.all.keys(
+            "id",
+            "voting",
+            "title",
+            "created",
+            "statue",
+            "created_at_date",
+            "does_not_belongs_to",
+            "v__v",
+            "commenting_counter"
+          );
+          expect(res.body.articles.length).to.equal(4);
+          expect(res.body.articles[0].comment_count).to.equal(2);
+          expect(res.body.articles[0].comment_count).to.not.equal(304);
         });
     });
     it("Get returns a status of 200 and a single article", () => {
