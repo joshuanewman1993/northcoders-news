@@ -29,8 +29,10 @@ describe("/api", () => {
           expect(res.body).to.have.all.keys("topics");
           expect(Array.isArray(res.body.topics)).to.be.true;
           expect(res.body.topics[0]).to.be.an("object");
+          expect(res.body.topics.length).to.equal(2);
         });
     });
+
     it("Get returns a status of 200 and all articles by slug related to mitch", () => {
       return req
         .get("/api/topics/mitch/articles")
@@ -38,6 +40,7 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.have.all.keys("topics");
           expect(res.body.topics[0].belongs_to).to.equal("mitch");
+          expect(res.body.topics.length).to.equal(2);
         });
     });
     it("Get returns a status of 200 and all articles by slug related to cats", () => {
@@ -47,6 +50,7 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.have.all.keys("topics");
           expect(res.body.topics[1].belongs_to).to.equal("cats");
+          expect(res.body.topics.length).to.equal(2);
         });
     });
     it("Post returns a status of 201 and creates a new article by slug", () => {
@@ -155,7 +159,8 @@ describe("/api", () => {
           expect(res.body.articles[0].title).to.equal(
             "Living in the shadow of a great man"
           );
-          expect(res.body.articles[0].created_by.name).to.equal("jonny");
+          expect(res.body.articles.length).to.equal(4);
+          expect(res.body.articles[0].comment_count).to.equal(2);
         });
     });
     it("Get returns a status of 200 and a single article", () => {
@@ -195,6 +200,7 @@ describe("/api", () => {
             "dedekind561"
           );
           expect(res.body.comments[0].created_by.name).to.eql("mitch");
+          expect(res.body.comments.length).to.equal(8);
         });
     });
   });
@@ -211,6 +217,7 @@ describe("/api", () => {
           expect(res.body.users[1].avatar_url).to.equal(
             "https://carboncostume.com/wordpress/wp-content/uploads/2017/10/dale-chipanddalerescuerangers.jpg"
           );
+          expect(res.body.users.length).to.equal(2);
         });
     });
     it("Get returns a status of 200 and returns a single username", () => {
