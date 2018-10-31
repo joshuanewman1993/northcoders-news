@@ -328,4 +328,26 @@ describe("/api", () => {
         });
     });
   });
+  describe.only("status 400", () => {
+    it("returns a status of 400 when passed an invalid comment id", () => {
+      return req
+        .get("/api/comments/nathan")
+        .expect(400)
+        .then(res => {
+          expect(res.body).to.eql({
+            msg: "You made a bad request"
+          });
+        });
+    });
+    it("returns a status of 400 when passed an invalid article id", () => {
+      return req
+        .get("/api/articles/nathan")
+        .expect(400)
+        .then(res => {
+          expect(res.body).to.eql({
+            msg: "You made a bad request"
+          });
+        });
+    });
+  });
 });
