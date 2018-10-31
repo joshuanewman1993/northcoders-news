@@ -1,7 +1,7 @@
 module.exports = {
-  Articles: require("./Articles"),
-  Comments: require("./Comments"),
-  Topics: require("./Topics"),
-  Users: require("./Users"),
-  HomePage: require("./Homepage")
+  Articles: require("./articles"),
+  Comments: require("./comments"),
+  Topics: require("./topics"),
+  Users: require("./users"),
+  HomePage: require("./homepage")
 };
