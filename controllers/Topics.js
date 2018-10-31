@@ -38,7 +38,7 @@ const postArticleBySlugId = (req, res, next) => {
   Article.create({ ...req.body, belongs_to: slug })
     .then(article => {
       if (!article) {
-        Promise.reject({ status: 400, msg: "bad request" });
+        Promise.reject({ status: 400, msg: "You made a bad request" });
       }
       res.status(201).send({ article });
     })

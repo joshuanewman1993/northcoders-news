@@ -1,9 +1,11 @@
 const Users = require("../models/User");
 
 const fetchAllUsers = (req, res, next) => {
-  // console.log(req.params.users, "is this undefined");
   Users.find()
     .then(users => {
+      if (users.length === 0) {
+        return Promise.reject({ status: 404, msg: "user not found" });
+      }
       res.status(200).send({ users });
     })
     .catch(next);
@@ -24,7 +26,7 @@ const createOneUser = (req, res, next) => {
   Users.create({ ...req.body, username: req.params.username })
     .then(user => {
       if (!user) {
-        Promise.reject({ status: 400, msg: "bad request" });
+        Promise.reject({ status: 400, msg: "You made a bad request" });
       }
       res.status(201).send({ user });
     })
@@ -32,10 +34,12 @@ const createOneUser = (req, res, next) => {
 };
 
 const deleteOneUserByUserName = (req, res, next) => {
-  Users.findOneAndRemove(req.params.username)
+  Users.findOneAndRemove({ username: req.params.username })
     .then(deleted => {
-      if (!deleted) {
-        return Promise.reject({ status: 400, msg: "bad request" });
+      // this is not fully functioning properly it allows you to delete based on any username
+      //but it sends a bad request out when there is no users currently.
+      if (deleted.length === 0) {
+        return Promise.reject({ status: 400, msg: "You made a bad request" });
       }
       res.status(204).send({ deleted });
     })

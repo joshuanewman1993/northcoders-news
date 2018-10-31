@@ -3,11 +3,15 @@ const {
   fetchAllArticles,
   fetchArticleById,
   postCommentsByArticleId,
-  fetchAllArticleCommentsbyId
+  fetchAllArticleCommentsbyId,
+  changeArticleVote
 } = require("../controllers/articles");
 
 articlesRoute.route("/").get(fetchAllArticles);
-articlesRoute.route("/:id").get(fetchArticleById);
+articlesRoute
+  .route("/:id")
+  .get(fetchArticleById)
+  .patch(changeArticleVote);
 articlesRoute.route("/:id/comments").get(fetchAllArticleCommentsbyId);
 
 articlesRoute.route("/:id/comments").post(postCommentsByArticleId);

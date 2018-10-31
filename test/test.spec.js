@@ -294,7 +294,7 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.eql({ msg: "page not found" });
           expect(res.body).to.be.an("object");
-          expect(res.body).to.not.equal("cats");
+          expect(res.body).to.not.equal(topics[1].slug);
           expect(res.body).to.not.equal({
             comment: {
               votes: 7,
@@ -328,7 +328,7 @@ describe("/api", () => {
         });
     });
   });
-  describe.only("status 400", () => {
+  describe("status 400", () => {
     it("returns a status of 400 when passed an invalid comment id", () => {
       return req
         .get("/api/comments/nathan")
@@ -337,6 +337,7 @@ describe("/api", () => {
           expect(res.body).to.eql({
             msg: "You made a bad request"
           });
+          expect(res.body).to.not.eql({ msg: "page not found" });
         });
     });
     it("returns a status of 400 when passed an invalid article id", () => {
@@ -347,6 +348,7 @@ describe("/api", () => {
           expect(res.body).to.eql({
             msg: "You made a bad request"
           });
+          expect(res.body).to.not.eql({ msg: "page not found" });
         });
     });
   });
