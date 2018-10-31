@@ -1,7 +1,7 @@
 const handle400 = (err, req, res, next) => {
-  // console.log(err, "hi");
   if (err.status === 400 || err.name === "CastError") {
-    res.status(400).send({ msg: err.message || "You made a bad request" });
+    // sending err.message here sends the mongo error to the client which is bad
+    res.status(400).send({ msg: err.msg || "You made a bad request" });
   } else next(err);
 };
 
