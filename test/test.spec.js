@@ -201,110 +201,82 @@ describe("/api", () => {
         });
     });
   });
-});
 
-describe("status 404", () => {
-  it("returns a status of 404 when passed an invalid /article link", () => {
-    return req
-      .get("/api/article")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-      });
-  });
-  it("returns a status of 404 when passed an invalid /comment link", () => {
-    return req
-      .get("/api/comment")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-      });
-  });
-  it("returns a status of 404 when passed an invalid /user link", () => {
-    return req
-      .get("/api/user")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-      });
-  });
-  it("returns a status of 404 when passed an invalid /topic link", () => {
-    return req
-      .get("/api/user")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-      });
-  });
-  it("returns a status of 404 when passed an invalid slug", () => {
-    return req
-      .get("/api/topics/bob/articles")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-        expect(res.body).to.not.be.an("array");
-        expect(res.body).to.not.equal("msg: You made a bad request");
-      });
-  });
-  it("returns a status of 404 when passed an invalid article id", () => {
-    return req
-      .get("/api/articles/5bd31e1bc113b7adf623e2b8")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-      });
-  });
-  it("returns a status of 404 when passed an invalid article id to get comments", () => {
-    return req
-      .get("/api/articles/5bd31e1bc113b7adf623e2b8/comments")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-        expect(res.body).to.not.equal({ msg: "You made a bad request" });
-        expect(res.body).to.not.equal({
-          votes: 7,
-          created_at: "2017-07-26T06:42:10.835Z",
-          _id: "5bd95bacf723230097b8a5f2",
-          body:
-            "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — on you it works.",
-          belongs_to: "5bd95bacf723230097b8a5ee",
-          created_by: {
-            _id: "5bd95bacf723230097b8a5ed",
-            username: "dedekind561",
-            name: "mitch",
-            avatar_url:
-              "https://carboncostume.com/wordpress/wp-content/uploads/2017/10/dale-chipanddalerescuerangers.jpg",
-            __v: 0
-          },
-          __v: 0
+  // 404 testing block
+  describe("status 404", () => {
+    it("returns a status of 404 when passed an invalid /article link", () => {
+      return req
+        .get("/api/article")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
         });
-      });
-  });
-  it("returns a status of 404 when passed an comment id", () => {
-    return req
-      .get("/api/comments/6bd5f6806f11fb430b789ff4")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-        expect(res.body).to.not.equal("cats");
-        expect(res.body).to.not.equal({
-          comment: {
+    });
+    it("returns a status of 404 when passed an invalid /comment link", () => {
+      return req
+        .get("/api/comment")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an invalid /user link", () => {
+      return req
+        .get("/api/user")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an invalid /topic link", () => {
+      return req
+        .get("/api/user")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an invalid slug", () => {
+      return req
+        .get("/api/topics/bob/articles")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+          expect(res.body).to.not.be.an("array");
+          expect(res.body).to.not.equal("msg: You made a bad request");
+        });
+    });
+    it("returns a status of 404 when passed an invalid article id", () => {
+      return req
+        .get("/api/articles/5bd31e1bc113b7adf623e2b8")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+        });
+    });
+    it("returns a status of 404 when passed an invalid article id to get comments", () => {
+      return req
+        .get("/api/articles/5bd31e1bc113b7adf623e2b8/comments")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+          expect(res.body).to.not.equal({ msg: "You made a bad request" });
+          expect(res.body).to.not.equal({
             votes: 7,
             created_at: "2017-07-26T06:42:10.835Z",
-            _id: "5bd8b855c43542cb5df9c08b",
+            _id: "5bd95bacf723230097b8a5f2",
             body:
               "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — on you it works.",
-            belongs_to: "5bd8b855c43542cb5df9c087",
+            belongs_to: "5bd95bacf723230097b8a5ee",
             created_by: {
-              _id: "5bd8b855c43542cb5df9c086",
+              _id: "5bd95bacf723230097b8a5ed",
               username: "dedekind561",
               name: "mitch",
               avatar_url:
@@ -312,19 +284,48 @@ describe("status 404", () => {
               __v: 0
             },
             __v: 0
-          }
+          });
         });
-      });
-  });
-  it("returns a status of 404 when passed an invalid username", () => {
-    return req
-      .get("/api/users/venom")
-      .expect(404)
-      .then(res => {
-        expect(res.body).to.eql({ msg: "page not found" });
-        expect(res.body).to.be.an("object");
-        expect(res.body).to.not.equal({ msg: "You made a bad request" });
-        expect(res.body).to.not.be.an("array");
-      });
+    });
+    it("returns a status of 404 when passed an comment id", () => {
+      return req
+        .get("/api/comments/6bd5f6806f11fb430b789ff4")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+          expect(res.body).to.not.equal("cats");
+          expect(res.body).to.not.equal({
+            comment: {
+              votes: 7,
+              created_at: "2017-07-26T06:42:10.835Z",
+              _id: "5bd8b855c43542cb5df9c08b",
+              body:
+                "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — on you it works.",
+              belongs_to: "5bd8b855c43542cb5df9c087",
+              created_by: {
+                _id: "5bd8b855c43542cb5df9c086",
+                username: "dedekind561",
+                name: "mitch",
+                avatar_url:
+                  "https://carboncostume.com/wordpress/wp-content/uploads/2017/10/dale-chipanddalerescuerangers.jpg",
+                __v: 0
+              },
+              __v: 0
+            }
+          });
+        });
+    });
+    it("returns a status of 404 when passed an invalid username", () => {
+      return req
+        .get("/api/users/venom")
+        .expect(404)
+        .then(res => {
+          expect(res.body).to.eql({ msg: "page not found" });
+          expect(res.body).to.be.an("object");
+          expect(res.body).to.not.equal({ msg: "You made a bad request" });
+          expect(res.body).to.not.be.an("array");
+        });
+    });
   });
 });
