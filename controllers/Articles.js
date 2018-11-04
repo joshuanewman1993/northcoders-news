@@ -51,14 +51,15 @@ const postCommentsByArticleId = (req, res, next) => {
 };
 
 const changeArticleVote = (req, res, next) => {
-  let value = req.query === "up" ? 1 : -1;
+  let value = req.query.vote === "up" ? 1 : req.query.vote === "down" ? -1 : 0;
+
   Article.findOneAndUpdate(
     { _id: req.params.id },
     { $inc: { votes: value } },
     { new: true }
   )
     .then(article => {
-      res.send(article);
+      res.status(200).send(article);
     })
     .catch(next);
 };

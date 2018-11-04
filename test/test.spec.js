@@ -31,8 +31,7 @@ describe("/api", () => {
           expect(res.body.topics[0]).to.be.an("object");
           expect(res.body).to.not.be.a("string");
           expect(res.body).to.not.be.an("array");
-          expect(res.body.topics.length).to.equal(2);
-          expect(res.body.topics.length).to.not.equal(123);
+          expect(res.body.topics.length).to.equal(topics.length);
           expect(res.body.topics[0]).to.have.keys(
             "_id",
             "title",
@@ -55,7 +54,7 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.have.all.keys("topics");
           expect(res.body.topics[0].belongs_to).to.equal("mitch");
-          expect(res.body.topics.length).to.equal(2);
+          expect(res.body.topics.length).to.equal(topics.length);
         });
     });
     it("Get returns a status of 200 and all articles by slug related to cats", () => {
@@ -65,7 +64,7 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.have.all.keys("topics");
           expect(res.body.topics[1].belongs_to).to.equal("cats");
-          expect(res.body.topics.length).to.equal(2);
+          expect(res.body.topics.length).to.equal(topics.length);
         });
     });
     it("Post returns a status of 201 and creates a new article by slug", () => {
@@ -98,7 +97,7 @@ describe("/api", () => {
           expect(res.body.articles[0].title).to.equal(
             "Living in the shadow of a great man"
           );
-          expect(res.body.articles.length).to.equal(4);
+          expect(res.body.articles.length).to.equal(articles.length);
           expect(res.body.articles[0].comment_count).to.equal(2);
           expect(res.body.articles[0]).to.have.all.keys(
             "_id",
@@ -122,9 +121,8 @@ describe("/api", () => {
             "v__v",
             "commenting_counter"
           );
-          expect(res.body.articles.length).to.equal(4);
+          expect(res.body.articles.length).to.equal(articles.length);
           expect(res.body.articles[0].comment_count).to.equal(2);
-          expect(res.body.articles[0].comment_count).to.not.equal(304);
         });
     });
     it("Get returns a status of 200 and a single article", () => {
@@ -139,19 +137,36 @@ describe("/api", () => {
           expect(res.body.article._id).to.not.equal("Jolly Roger");
         });
     });
+    it("Patch returns a status of 200 and increases article votes", () => {
+      return req
+        .patch(`/api/articles/${articleDocs[0]._id}?vote=up`)
+        .expect(200)
+        .then(res => {
+          expect(articleDocs[0].votes + 1).to.equal(res.body.votes);
+        });
+    });
+    it("Patch returns a status of 200 and decreases article votes", () => {
+      return req
+        .patch(`/api/articles/${articleDocs[0]._id}?vote=down`)
+        .expect(200)
+        .then(res => {
+          expect(articleDocs[0].votes - 1).to.equal(res.body.votes);
+        });
+    });
+    it("Get returns a status of 200 and displays all comments on an article", () => {
+      // console.log(articleDocs[0]._id); // we use articleDocs and the array [0] element to access the array
+      // then get the id
+      return req
+        .get(`/api/articles/${articleDocs[0]._id}/comments`)
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.have.all.keys("comments");
+          expect(res.body.comments).to.be.an("array");
+          expect(res.body.comments.length).to.equal(2);
+        });
+    });
   });
-  it("Get returns a status of 200 and displays all comments on an article", () => {
-    // console.log(articleDocs[0]._id); // we use articleDocs and the array [0] element to access the array
-    // then get the id
-    return req
-      .get(`/api/articles/${articleDocs[0]._id}/comments`)
-      .expect(200)
-      .then(res => {
-        expect(res.body).to.have.all.keys("comments");
-        expect(res.body.comments).to.be.an("array");
-        expect(res.body.comments.length).to.equal(2);
-      });
-  });
+
   // comments testing
   describe("/comments", () => {
     it("Get returns a status of 200 and returns all comments ", () => {
@@ -161,13 +176,29 @@ describe("/api", () => {
         .then(res => {
           expect(res.body).to.have.all.keys("comments");
           expect(res.body).to.be.an("object");
-          console.log(res.body.comments[0].created_by.username);
           expect(res.body.comments[0].created_by.username).to.eql(
             "dedekind561"
           );
           expect(res.body.comments[0].created_by.name).to.eql("mitch");
-          expect(res.body.comments.length).to.equal(8);
-          expect(res.body.comments.length).to.not.equal(907);
+          expect(res.body.comments.length).to.equal(comments.length);
+          expect(res.body.comments[0].votes).to.equal(comments[0].votes);
+        });
+    });
+    it("Patch returns a status of 200 and increases the votes ", () => {
+      return req
+        .patch(`/api/comments/${commentDocs[0]._id}?vote=up`)
+        .expect(200)
+        .then(res => {
+          expect(commentDocs[0].votes + 1).to.equal(res.body.comment.votes);
+        });
+    });
+    it("Patch returns a status of 200 and decreases the votes ", () => {
+      return req
+        .patch(`/api/comments/${commentDocs[0]._id}?vote=down`)
+        .expect(200)
+        .then(res => {
+          // console.log(commentDocs[0].votes + 1);
+          expect(commentDocs[0].votes - 1).to.equal(res.body.comment.votes);
         });
     });
   });
@@ -184,8 +215,7 @@ describe("/api", () => {
           expect(res.body.users[1].avatar_url).to.equal(
             "https://carboncostume.com/wordpress/wp-content/uploads/2017/10/dale-chipanddalerescuerangers.jpg"
           );
-          expect(res.body.users.length).to.equal(2);
-          expect(res.body.users.length).to.not.equal(505);
+          expect(res.body.users.length).to.equal(users.length);
         });
     });
     it("Get returns a status of 200 and returns a single username", () => {

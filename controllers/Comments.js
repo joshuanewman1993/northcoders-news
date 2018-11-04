@@ -36,7 +36,7 @@ const postOneCommentById = (req, res, next) => {
 const deleteOneComment = (req, res, next) => {
   Comment.findOneAndRemove(req.params.comment_id)
     .then(deleted => {
-      if (!deleted) {
+      if (!deleted || deleted.length === 0) {
         return Promise.reject({ status: 400, msg: "You made a bad request" });
       }
       res.status(204).send({ deleted });
@@ -44,9 +44,22 @@ const deleteOneComment = (req, res, next) => {
     .catch(next);
 };
 
+const changeCommentVote = (req, res, next) => {
+  let value = req.query.vote === "up" ? 1 : req.query.vote === "down" ? -1 : 0;
+  Comment.findOneAndUpdate(
+    { _id: req.params.comment_id },
+    { $inc: { votes: value } },
+    { new: true }
+  )
+    .then(comment => {
+      res.status(200).send({ comment });
+    })
+    .catch(next);
+};
 module.exports = {
   fetchAllComments,
   fetchOneCommentById,
   deleteOneComment,
-  postOneCommentById
+  postOneCommentById,
+  changeCommentVote
 };

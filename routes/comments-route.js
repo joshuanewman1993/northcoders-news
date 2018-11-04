@@ -4,11 +4,16 @@ const {
   fetchAllComments,
   fetchOneCommentById,
   postOneCommentById,
-  deleteOneComment
+  deleteOneComment,
+  changeCommentVote
 } = require("../controllers/comments");
 
 commentsRoute.route("/").get(fetchAllComments);
-commentsRoute.route("/:comment_id").get(fetchOneCommentById);
-commentsRoute.route("/:comment_id").post(postOneCommentById);
-commentsRoute.route("/:comment_id").delete(deleteOneComment);
+commentsRoute
+  .route("/:comment_id")
+  .get(fetchOneCommentById)
+  .patch(changeCommentVote)
+  .post(postOneCommentById)
+  .delete(deleteOneComment);
+
 module.exports = commentsRoute;
