@@ -67,7 +67,7 @@ describe("/api", () => {
           expect(res.body.topics.length).to.equal(topics.length);
         });
     });
-    it("Post returns a status of 201 and creates a new article by slug", () => {
+    it("POST returns a status of 201 and creates a new article by slug", () => {
       const article = {
         votes: 0,
         title: "Living in the shadow of a snow man",
@@ -111,6 +111,7 @@ describe("/api", () => {
             "comment_count"
           );
           expect(res.body.articles[0]).to.not.have.all.keys(
+            //<-- this is probably over-kill
             "id",
             "voting",
             "title",

@@ -4,6 +4,7 @@ const Comment = require("../models/Comment");
 const fetchAllArticles = (req, res, next) => {
   return Promise.all([Article.find().lean(), Comment.find().lean()])
     .then(([articlesData, commentsData]) => {
+      //<-- use articleDocs and commentDocs
       const articles = articlesData.map(article => {
         const comment_count = commentsData.filter(
           comment => comment.belongs_to.toString() === article._id.toString()

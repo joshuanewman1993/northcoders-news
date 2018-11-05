@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run seed && mocha test",
     "start": "node listen.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon listen.js",
     "seed": "node ./seed/seed.dev.js"
   },
   "author": "",
