@@ -21,7 +21,7 @@ describe("/api", () => {
 
   // Topics tests
   describe("/topics", () => {
-    it("Get returns a status 200 and an array of topics", () => {
+    it("GET returns a status 200 and an array of topics", () => {
       return req
         .get("/api/topics")
         .expect(200)
@@ -47,7 +47,7 @@ describe("/api", () => {
         });
     });
 
-    it("Get returns a status of 200 and all articles by slug related to mitch", () => {
+    it("GET returns a status of 200 and all articles by slug related to mitch", () => {
       return req
         .get("/api/topics/mitch/articles")
         .expect(200)
@@ -57,7 +57,7 @@ describe("/api", () => {
           expect(res.body.topics.length).to.equal(topics.length);
         });
     });
-    it("Get returns a status of 200 and all articles by slug related to cats", () => {
+    it("GET returns a status of 200 and all articles by slug related to cats", () => {
       return req
         .get("/api/topics/cats/articles")
         .expect(200)
@@ -87,7 +87,7 @@ describe("/api", () => {
 
   // articles testing block
   describe("/articles", () => {
-    it("Get returns a status of 200 and an array of articles", () => {
+    it("GET returns a status of 200 and an array of articles", () => {
       return req
         .get("/api/articles")
         .expect(200)
@@ -126,7 +126,7 @@ describe("/api", () => {
           expect(res.body.articles[0].comment_count).to.equal(2);
         });
     });
-    it("Get returns a status of 200 and a single article", () => {
+    it("GET returns a status of 200 and a single article", () => {
       // I use the articleDocs here so that I can gain access to the ._id
       return req
         .get(`/api/articles/${articleDocs[0]._id}`)
@@ -146,7 +146,7 @@ describe("/api", () => {
           expect(articleDocs[0].votes + 1).to.equal(res.body.votes);
         });
     });
-    it("Patch returns a status of 200 and decreases article votes", () => {
+    it("PATCH returns a status of 200 and decreases article votes", () => {
       return req
         .patch(`/api/articles/${articleDocs[0]._id}?vote=down`)
         .expect(200)
@@ -154,7 +154,7 @@ describe("/api", () => {
           expect(articleDocs[0].votes - 1).to.equal(res.body.votes);
         });
     });
-    it("Get returns a status of 200 and displays all comments on an article", () => {
+    it("GET returns a status of 200 and displays all comments on an article", () => {
       // console.log(articleDocs[0]._id); // we use articleDocs and the array [0] element to access the array
       // then get the id
       return req
@@ -170,7 +170,7 @@ describe("/api", () => {
 
   // comments testing
   describe("/comments", () => {
-    it("Get returns a status of 200 and returns all comments ", () => {
+    it("GET returns a status of 200 and returns all comments ", () => {
       return req
         .get("/api/comments")
         .expect(200)
@@ -185,7 +185,7 @@ describe("/api", () => {
           expect(res.body.comments[0].votes).to.equal(comments[0].votes);
         });
     });
-    it("Patch returns a status of 200 and increases the votes ", () => {
+    it("PATCH returns a status of 200 and increases the votes ", () => {
       return req
         .patch(`/api/comments/${commentDocs[0]._id}?vote=up`)
         .expect(200)
@@ -193,7 +193,7 @@ describe("/api", () => {
           expect(commentDocs[0].votes + 1).to.equal(res.body.comment.votes);
         });
     });
-    it("Patch returns a status of 200 and decreases the votes ", () => {
+    it("PATCH returns a status of 200 and decreases the votes ", () => {
       return req
         .patch(`/api/comments/${commentDocs[0]._id}?vote=down`)
         .expect(200)
@@ -204,7 +204,7 @@ describe("/api", () => {
     });
   });
   describe("/users", () => {
-    it("Get returns a status of 200 and returns all users", () => {
+    it("GET returns a status of 200 and returns all users", () => {
       return req
         .get("/api/users")
         .expect(200)
@@ -219,7 +219,7 @@ describe("/api", () => {
           expect(res.body.users.length).to.equal(users.length);
         });
     });
-    it("Get returns a status of 200 and returns a single username", () => {
+    it("GET returns a status of 200 and returns a single username", () => {
       return req
         .get("/api/users/butter_bridge")
         .expect(200)
