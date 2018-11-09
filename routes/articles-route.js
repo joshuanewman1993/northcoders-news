@@ -5,7 +5,7 @@ const {
   postCommentsByArticleId,
   fetchAllArticleCommentsbyId,
   changeArticleVote
-} = require("../controllers/articles");
+} = require("../controllers/Articles");
 
 articlesRoute.route("/").get(fetchAllArticles);
 articlesRoute

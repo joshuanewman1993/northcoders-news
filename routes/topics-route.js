@@ -5,7 +5,7 @@ const {
   fetchOneSlug,
   fetchAllArticlesBySlugId,
   postArticleBySlugId
-} = require("../controllers/topics");
+} = require("../controllers/Topics");
 console.log("here");
 topicsRoute.get("/", fetchAllTopics);
 // fetch one topic by slug??!?

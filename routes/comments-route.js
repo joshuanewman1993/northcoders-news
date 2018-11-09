@@ -6,7 +6,7 @@ const {
   postOneCommentById,
   deleteOneComment,
   changeCommentVote
-} = require("../controllers/comments");
+} = require("../controllers/Comments");
 
 commentsRoute.route("/").get(fetchAllComments);
 commentsRoute
