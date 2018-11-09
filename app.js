@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const { DB_URL } =
   process.env.NODE_ENV === "production" ? process.env : require("./config");
+console.log(DB_URL);
 const { handle400, handle404, handle500 } = require("./error");
 const apiRouter = require("./routes/api-route");
 // need to stop forgetting to bring in objects and construct or deconstruct them
