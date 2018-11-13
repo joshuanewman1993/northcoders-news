@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const { DB_URL } =
@@ -17,6 +18,7 @@ mongoose
   .then(() => console.log(`Connected to database ${DB_URL}`))
   .catch(console.log());
 
+app.use(cors());
 // this is used to render the html page from your view folder
 app.get("/", (req, res, next) => {
   res.sendFile(`${__dirname}/views/api.html`);
